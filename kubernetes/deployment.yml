@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nop-commerce-deployment
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: nopcommerce
+  template:
+    metadata:
+      labels:
+        app: nopcommerce
+    spec:
+      containers:
+        - name: nopcommerce
+          image: 753916464885.dkr.ecr.ap-south-1.amazonaws.com/gitactionjava:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 5000

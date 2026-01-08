@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nop-commerce-service
+  labels:
+    app: nopcommerce
+spec:
+  type: LoadBalancer
+  selector:
+    app: nopcommerce
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
