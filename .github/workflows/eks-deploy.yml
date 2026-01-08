@@ -23,7 +23,7 @@ jobs:
       - name: Login to ECR
         uses: aws-actions/amazon-ecr-login@v2
 
-      - name: Build and Push Docker Image
+      - name: Build & Push Docker Image
         run: |
           IMAGE_URI=${{ secrets.ECR_REPO }}:${{ github.sha }}
           docker build -t $IMAGE_URI .
@@ -38,7 +38,7 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          sed -i "s|IMAGE_PLACEHOLDER|${IMAGE_URI}|g" k8s/deployment.yaml
+          sed -i "s|IMAGE_PLACEHOLDER|$IMAGE_URI|g" k8s/deployment.yaml
           kubectl apply -f k8s/
 
       - name: Verify Deployment
