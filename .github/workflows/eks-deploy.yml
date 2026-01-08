@@ -25,10 +25,11 @@ jobs:
 
       - name: Build & Push Docker Image
         run: |
-          IMAGE_URI=${{ secrets.ECR_REPO }}:${{ github.sha }}
-          docker build -t $IMAGE_URI .
-          docker push $IMAGE_URI
-          echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+         IMAGE_URI=753916464885.dkr.ecr.ap-south-1.amazonaws.com/cluster-end:${{ github.sha }}
+         docker build -t $IMAGE_URI .
+         docker push $IMAGE_URI
+         echo "IMAGE_URI=$IMAGE_URI" >> $GITHUB_ENV
+
 
       - name: Update kubeconfig
         run: |
@@ -38,8 +39,8 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          sed -i "s|IMAGE_PLACEHOLDER|$IMAGE_URI|g" k8s/deployment.yaml
-          kubectl apply -f k8s/
+          sed -i "s|IMAGE_PLACEHOLDER|$IMAGE_URI|g" Kubernetes/deployment.yaml
+          kubectl apply -f Kubernetes/
 
       - name: Verify Deployment
         run: kubectl get all
